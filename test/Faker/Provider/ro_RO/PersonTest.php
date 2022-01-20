@@ -6,6 +6,7 @@ use Faker\Generator;
 use Faker\Provider\DateTime;
 use Faker\Provider\ro_RO\Person;
 use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
 
 final class PersonTest extends TestCase
 {
@@ -17,7 +18,7 @@ final class PersonTest extends TestCase
      */
     protected $faker;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $faker = new Generator();
         $faker->addProvider(new DateTime($faker));
@@ -26,7 +27,7 @@ final class PersonTest extends TestCase
         $this->faker = $faker;
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->faker->setDefaultTimezone();
     }
@@ -130,7 +131,7 @@ final class PersonTest extends TestCase
      */
     public function test_invalidGender_throwsException($value)
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->faker->cnp($value);
     }
 
@@ -155,7 +156,7 @@ final class PersonTest extends TestCase
      */
     public function test_invalidYear_throwsException($value)
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->faker->cnp(null, $value);
     }
 
@@ -178,7 +179,7 @@ final class PersonTest extends TestCase
      */
     public function test_invalidCountyCode_throwsException($value)
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->faker->cnp(null, null, $value);
     }
 
